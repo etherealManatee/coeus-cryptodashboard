@@ -1,0 +1,10 @@
+body{
+    background-color: #333;
+    margin: 0;
+}
+
+.sidebar{
+    background-color: darkslateblue;
+    height: 100vh;
+    border-right: solid 1px deeppink;
+}
