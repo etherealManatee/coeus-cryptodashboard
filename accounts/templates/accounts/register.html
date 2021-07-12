@@ -1,0 +1,14 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<h3>Register</h3>
+<form method="post">
+    {% csrf_token %}
+        {{register_form}}    
+        
+        <div>
+            <button type="submit">Login</button>
+        </div>
+        
+    </form>
+{% endblock content %}
