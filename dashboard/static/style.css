@@ -1,11 +1,21 @@
-body{
+body {
     background-color: #333;
     margin: 0;
     color: white;
 }
 
-.sidebar{
-    background-color: darkslateblue;
+.sidebar {
+    background-color: rgb(43, 9, 63);
     height: 100vh;
-    border-right: solid 1px deeppink;
+    border-right: solid 1px rgb(99, 13, 59);
+}
+
+.draggable {
+    background-color: grey;
+    border: 1px solid black;
+}
+
+.fngimg {
+    height: 100px;
+    width: auto;
 }

@@ -1,18 +1,41 @@
 {% extends 'dashboard/base.html' %}
 
+
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-3">1</div>
-        <div class="col-3">2</div>
-        <div class="col-3">3</div>
+<div class="row">
+    <div class="col m-2 draggable">
+        <h5>{{btc.data.1.name}}</h5>
+        <div>{{btc.data.1.symbol}}</div>
+        <div>Price: ${{btc.data.1.quotes.USD.price}}</div>
+        <div> % (1h): {{btc.data.1.quotes.USD.percent_change_1h}}</div>
+        <div> % (24h): {{btc.data.1.quotes.USD.percent_change_24h}}</div>
     </div>
-    <div class="row">
-        <div class="col-3">4</div>
-        <div class="col-3">5</div>
-        <div class="col-3">6</div>
+    <div class="col m-2 draggable">
+        <h5>{{eth.data.1027.name}}</h5>
+        <div>{{eth.data.1027.symbol}}</div>
+        <div>Price: ${{eth.data.1027.quotes.USD.price}}</div>
+        <div> % (1h): {{eth.data.1027.quotes.USD.percent_change_1h}}</div>
+        <div> % (24h): {{eth.data.1027.quotes.USD.percent_change_24h}}</div>
+    </div>
+    <div class="col m-2 draggable">
+        <h5>{{ada.data.2010.name}}</h5>
+        <div>{{ada.data.2010.symbol}}</div>
+        <div>Price: ${{ada.data.2010.quotes.USD.price}}</div>
+        <div> % (1h): {{ada.data.2010.quotes.USD.percent_change_1h}}</div>
+        <div> % (24h): {{ada.data.2010.quotes.USD.percent_change_24h}}</div>
     </div>
 </div>
-{% endblock content %}
 
+<div class="row">
+    <div class="col m-2 p-0 draggable">
+        <img src="https://alternative.me/crypto/fear-and-greed-index.png" alt="Latest Crypto Fear & Greed Index"/>
+    </div>
+    <div class="col m-2 draggable">5</div>
+    <div class="col m-2 draggable">
+        <h5>Cointelegraph</h5>
+        <script src="https://cointelegraph.com/news-widget" data-ct-widget-limit="30" data-ct-widget-theme="dark" data-ct-widget-language="en"></script>
+    </div>
+</div>
+
+{% endblock content %}
