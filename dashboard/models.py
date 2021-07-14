@@ -14,6 +14,12 @@ class Instruments(models.Model):
 
     user = models.ManyToManyField(User, name="user")
 
+    # def serializer(self):
+    #     return {
+    #         "name" : self.name,
+    #         "user" : self.user.
+    #     }
+
 class Cryptocurrency(models.Model):
     id = models.UUIDField(
         primary_key=True,

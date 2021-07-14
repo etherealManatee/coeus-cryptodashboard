@@ -27,11 +27,10 @@
             </div>
             <div>
                 <h6>add coin here</h6>
-                <form method="post">
-                {% csrf_token %}
-                    <input name="q" type="text"/>
-                    <button type="submit">Add</button>
-                </form>
+              
+                    <input name="coinName" type="text" id="coin"/>
+                    <button type="submit" id="getCoins">Add</button>
+                
             </div>
             <a href="{% url 'accounts:logout' %}">Logout</a>
         </div>
@@ -43,6 +42,23 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+
+    async function getData(search){
+        let {data} =  await axios.get(`https://api.alternative.me/v2/ticker/${search}/`)
+
+        console.log(typeof data)
+
+    }
+
+    document.querySelector("#getCoins").addEventListener("click", function(e) {
+        let coin = document.querySelector("#coin").value
+        getData(coin)
+    })
+
+    </script>
 {% block js %}
 {% endblock js %}
 </body>

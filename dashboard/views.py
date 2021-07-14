@@ -7,22 +7,27 @@ import json
 def dashboard_view(request):
 
     if request.method == "POST":
-        search = request.POST['q']
-        URL = f"https://api.alternative.me/v2/ticker/{search}/"
-        page = requests.get(URL)
-        page_json = page.json()['data']
+        print(request.data)
+        pass
+        # search = request.POST['q']
+        # URL = f"https://api.alternative.me/v2/ticker/{search}/"
+        # page = requests.get(URL)
+        # print(page.text)
+        # page_json = page.json()['data']
+        # print(type(page_json))
         # the_dict = json.loads(page.json())
 
-        print(page_json)
-        if len(page_json) > 0:
-            print('more than 0')
-            # first_key = list(page_json['data'].keys())[0]
-            # print(first_key)
-            # name = page_json['data'].first_key.name
-            # print(name)
-        else:
-            print('there is nothing, error')
-            return
+        # print(page_json)
+        # if len(page_json) > 0:
+        #     print('more than 0')
+        #     # first_key = list(page_json['data'].keys())[0]
+        #     # print(first_key)
+        #     # name = page_json['data'].first_key.name
+        #     # print(name)
+        #     return redirect(request, "dashboard/index.html")
+        # else:
+        #     print('there is nothing, error')
+        #     return redirect(request, "dashboard/index.html")
 
         return redirect(request, "dashboard/index.html")
 
