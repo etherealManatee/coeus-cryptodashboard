@@ -16,6 +16,23 @@
         <div class="sidebar col-2">
             <div>Coeus</div>
             <div>{{user.username}}</div>
+            <div>
+                <h6>coins you added</h6>
+                <select class="form-select" size="3" aria-label="size 3 select example">
+        
+                    <option value="1" id="btc">BTC info</option>
+                    <option value="2" id="eth">ETH info</option>
+                    <option value="3" id="ada">ADA info</option>
+                </select>
+            </div>
+            <div>
+                <h6>add coin here</h6>
+                <form method="post">
+                {% csrf_token %}
+                    <input name="q" type="text"/>
+                    <button type="submit">Add</button>
+                </form>
+            </div>
             <a href="{% url 'accounts:logout' %}">Logout</a>
         </div>
 
@@ -26,6 +43,7 @@
         </div>
     </div>
 </div>
-    
+{% block js %}
+{% endblock js %}
 </body>
 </html>
