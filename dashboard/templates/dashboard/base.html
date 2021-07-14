@@ -48,8 +48,23 @@
 
     async function getData(search){
         let {data} =  await axios.get(`https://api.alternative.me/v2/ticker/${search}/`)
-
-        console.log(typeof data)
+        if (typeof data == 'object'){
+            let arr = Object.values(data.data)
+            if (arr.length > 0){
+                console.log("yes")
+                let theData = data.data
+                axios.post(
+                    `/api/cryptocurrency/${search}`,
+                    {data : theData}
+                )
+            }
+            else{
+                alert("check your spelling")
+            }
+        }else{
+            console.log(data, "else")
+            alert("unsupported")
+        }
 
     }
 

@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect
 from dashboard.models import *
 import requests
 import json
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def dashboard_view(request):
+
+    
 
     if request.method == "POST":
         print(request.data)
@@ -43,3 +46,24 @@ def dashboard_view(request):
 
     context = {"btc" : btc.json(), "eth" : eth.json(), "ada" : ada.json()}
     return render(request, "dashboard/index.html", context)
+
+@csrf_exempt
+def add_crypto(request, crypto_name):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        first_dict = data.get('data')
+        first_arr = list(first_dict.values())
+        id_of_crypto_from_api = first_arr[0]['id']
+        symbol_of_crypto_from_api = first_arr[0]['symbol']
+        user_id = request.user.id
+
+        user = User.objects.get(pk=user_id)
+        user.cryptocurrencies.create(
+            name=crypto_name,
+            api_id=id_of_crypto_from_api,
+            symbol=symbol_of_crypto_from_api
+        )
+
+        return render(request, "dashboard/base.html")
+    return render(request, "dashboard/base.html")
+    
