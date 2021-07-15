@@ -95,6 +95,7 @@ DATABASES['default'] = dj_database_url.config(default='postgres://mapgbxlmcbijww
 
 #telling Django about the AbstractUser
 AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = '/auth/login/'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
