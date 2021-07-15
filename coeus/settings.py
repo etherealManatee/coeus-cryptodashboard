@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-quwvhh6=59otc0$_=sad(q=wgis7dnd@_8xmzneq2c!q6wphd-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -49,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'coeus.urls'
@@ -77,13 +81,16 @@ WSGI_APPLICATION = 'coeus.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'coeus_development',
-        'USER' : 'zhiyang',
-        'HOST' : 'localhost',
-        'PORT' : 5432
+        # # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'coeus_development',
+        # 'USER' : 'zhiyang',
+        # 'HOST' : 'localhost',
+        # 'PORT' : 5432
     }
 }
+
+#for deployment on heroku
+DATABASES['default'] = dj_database_url.config(default='postgres://mapgbxlmcbijww:4eb8709ddd45b67adab9ed2cbab44c4b3d511f201f901839cc0f93f3f8faaa9f@ec2-52-2-118-38.compute-1.amazonaws.com:5432/d63h231rh124vj')
 
 
 #telling Django about the AbstractUser
@@ -126,6 +133,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+    
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static')),
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

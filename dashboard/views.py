@@ -10,39 +10,53 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def dashboard_view(request):
 
-    # d = Dashboard.objects.create(user=request.user, pos=["bitcoin", 1])
-    # print(request.user.dashboard_setup.pos)
+    
+    # info_arr=list(info.values())
+    
 
     if request.method == "POST":
         data = json.loads(request.body)
-        print(data)
-        
-        # search = request.POST['q']
-        # URL = f"https://api.alternative.me/v2/ticker/{search}/"
-        # page = requests.get(URL)
-        # print(page.text)
-        # page_json = page.json()['data']
-        # print(type(page_json))
-        # the_dict = json.loads(page.json())
+        name_slug = data['name']
+        print(name_slug)
+        # print(request.user.dashboard_setup)
+        try:
+            u = Dashboard.objects.get(user=request.user)
 
-        # print(page_json)
-        # if len(page_json) > 0:
-        #     print('more than 0')
-        #     # first_key = list(page_json['data'].keys())[0]
-        #     # print(first_key)
-        #     # name = page_json['data'].first_key.name
-        #     # print(name)
-        #     return redirect(request, "dashboard/index.html")
-        # else:
-        #     print('there is nothing, error')
-        #     return redirect(request, "dashboard/index.html")
+            u.pos.append(name_slug)
+            u.save()
+        except Dashboard.DoesNotExist:
+            # user = User.objects.get(pk=request.user.id)
+            Dashboard.objects.create(
+                user=request.user,
+                pos = [name_slug]
+            )
 
         return render(request, "dashboard/index.html")
+
+    try:
+        checkDashboard = Dashboard.objects.get(user=request.user)
+        pos = checkDashboard.pos
+        dashboard = []
+        for element in pos:
+            URL=f"https://api.alternative.me/v2/ticker/{element}/"
+            info = requests.get(URL).json()
+            info_dict = info['data']
+            info_arr = list(info_dict.values())
+            dashboard.append({
+                "name" : info_arr[0]['name'],
+                "symbol" : info_arr[0]['symbol'],
+                "price" : info_arr[0]['quotes']['USD']['price'],
+                "change1" : info_arr[0]['quotes']['USD']['percent_change_1h'],
+                "change24" : info_arr[0]['quotes']['USD']['percent_change_24h']
+            })
+    except Dashboard.DoesNotExist:
+        dashboard = None
+    
 
     cryptocurrencies = Cryptocurrency.objects.filter(user_id=request.user.id)
     
 
-    context = {"cryptocurrencies" : cryptocurrencies}
+    context = {"cryptocurrencies" : cryptocurrencies, "dashboard" : dashboard}
     return render(request, "dashboard/index.html", context)
 
 @csrf_exempt

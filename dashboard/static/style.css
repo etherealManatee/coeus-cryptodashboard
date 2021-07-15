@@ -1,17 +1,52 @@
 body {
-    background-color: #333;
+    background-color: rgb(36, 36, 36);
     margin: 0;
     color: white;
 }
 
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
 .sidebar {
-    background-color: rgb(43, 9, 63);
-    height: 100vh;
-    border-right: solid 1px rgb(99, 13, 59);
+    background-color: rgb(36, 36, 36);
+    height: 100%;
+    border-right: solid 1px rgb(65, 65, 65);
+    min-width:200px;
+    padding: 30px 15px;
+}
+
+.full-container{
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+}
+
+.dashboard-container{
+    height:100%;
+    width: 100%;
+    overflow-y: scroll;
+    padding: 30px;
 }
 
 .box {
-    background-color: grey;
-    border: 1px solid black;
+    background-color: rgb(29, 29, 29);
+    /* border: 1px solid black; */
     border-radius: 2%;
+    padding: 20px;
+}
+
+input[type="text"], input[type="password"]{
+    background-color: rgba(255,255,255,0.8);
+    border: none;
+    display: block;
+    margin-bottom: 20px;
 }

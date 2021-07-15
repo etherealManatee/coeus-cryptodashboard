@@ -12,15 +12,16 @@
 <body>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="sidebar col-2">
-            <h4>Coeus</h4>
+    
+        <div class="d-flex flex-row align-items-stretch full-container">
+        <div class="sidebar">
+            <h3 class="mb-3">Coeus</h3>
             {% if request.user.is_authenticated %}
             <h5>{{user.username}}</h5>
-            <a href="{% url 'accounts:logout' %}">Logout</a>
+            <a class="mb-5"href="{% url 'accounts:logout' %}">Logout</a>
             
             <div>
-                <h6>coins you added</h6>
+                <h6 class="mt-5">coins you added</h6>
                 <select class="form-select" size="3" aria-label="size 3 select example">
                     {% for crypto in cryptocurrencies %}
                     <option value="{{crypto.api_id}}">{{crypto.symbol}}</option>
@@ -36,13 +37,15 @@
             </div>
             {% endif %}
         </div>
-
-        <div class="col-10">
+        <div class="dashboard-container">
+        <div class="col-12">
                 {% block content %}
 
                 {% endblock content %}
         </div>
-    </div>
+        </div>
+        </div>
+    
 </div>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
