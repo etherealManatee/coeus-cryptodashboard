@@ -11,18 +11,20 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="sidebar col-2">
-            <div>Coeus</div>
-            <div>{{user.username}}</div>
+            <h4>Coeus</h4>
+            {% if request.user.is_authenticated %}
+            <h5>{{user.username}}</h5>
+            <a href="{% url 'accounts:logout' %}">Logout</a>
+            
             <div>
                 <h6>coins you added</h6>
                 <select class="form-select" size="3" aria-label="size 3 select example">
-        
-                    <option value="1" id="btc">BTC info</option>
-                    <option value="2" id="eth">ETH info</option>
-                    <option value="3" id="ada">ADA info</option>
+                    {% for crypto in cryptocurrencies %}
+                    <option value="{{crypto.api_id}}">{{crypto.symbol}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div>
@@ -32,7 +34,7 @@
                     <button type="submit" id="getCoins">Add</button>
                 
             </div>
-            <a href="{% url 'accounts:logout' %}">Logout</a>
+            {% endif %}
         </div>
 
         <div class="col-10">

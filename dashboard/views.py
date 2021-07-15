@@ -3,15 +3,20 @@ from dashboard.models import *
 import requests
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@csrf_exempt
+@login_required
 def dashboard_view(request):
 
-    
+    # d = Dashboard.objects.create(user=request.user, pos=["bitcoin", 1])
+    # print(request.user.dashboard_setup.pos)
 
     if request.method == "POST":
-        print(request.data)
-        pass
+        data = json.loads(request.body)
+        print(data)
+        
         # search = request.POST['q']
         # URL = f"https://api.alternative.me/v2/ticker/{search}/"
         # page = requests.get(URL)
@@ -32,22 +37,17 @@ def dashboard_view(request):
         #     print('there is nothing, error')
         #     return redirect(request, "dashboard/index.html")
 
-        return redirect(request, "dashboard/index.html")
+        return render(request, "dashboard/index.html")
 
-    instrument = Instruments.objects.all()
-    BTC_URL = instrument[1].source
-    ETH_URL = instrument[2].source
-    ADA_URL = instrument[3].source
-    btc = requests.get(BTC_URL)
-    eth = requests.get(ETH_URL)
-    ada = requests.get(ADA_URL)
+    cryptocurrencies = Cryptocurrency.objects.filter(user_id=request.user.id)
+    
 
-    cryptocurrency = Cryptocurrency.objects.all()
-
-    context = {"btc" : btc.json(), "eth" : eth.json(), "ada" : ada.json()}
+    context = {"cryptocurrencies" : cryptocurrencies}
     return render(request, "dashboard/index.html", context)
 
 @csrf_exempt
+@login_required
+
 def add_crypto(request, crypto_name):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -65,5 +65,9 @@ def add_crypto(request, crypto_name):
         )
 
         return render(request, "dashboard/base.html")
+    
+    # cryptocurrencies = Cryptocurrency.objects.get(user_id=request.user.id)
+    # print(cryptocurrencies)
+    
     return render(request, "dashboard/base.html")
     

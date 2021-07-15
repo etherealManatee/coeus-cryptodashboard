@@ -10,5 +10,3 @@ class User(AbstractUser):
         editable=False,
         default=uuid.uuid4
     )
-
-    position = ArrayField(models.CharField(max_length=50), blank=True, default=list)

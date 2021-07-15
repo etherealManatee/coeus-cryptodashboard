@@ -3,130 +3,83 @@
 
 {% block content %}
 
-<div class="card" style="width: 21rem;" id="card2">
-  <div class="card-body">
-    <button id="add_view1" class="btn btn-primary">Add View</button>
-  </div>
-</div>
+<div class="row g-3 row-cols-3">
 
-
-<div class="row gx-3 row-cols-3">
-    <div class="col">
-    <div class="draggable">
-        <h5>{{btc.data.1.name}}</h5>
-        <div>{{btc.data.1.symbol}}</div>
-        <div>Price: ${{btc.data.1.quotes.USD.price}}</div>
-        <div> % (1h): {{btc.data.1.quotes.USD.percent_change_1h}}</div>
-        <div> % (24h): {{btc.data.1.quotes.USD.percent_change_24h}}</div>
-    </div>
-    </div>
-    <div class="col draggable">
-        <h5>{{eth.data.1027.name}}</h5>
-        <div>{{eth.data.1027.symbol}}</div>
-        <div>Price: ${{eth.data.1027.quotes.USD.price}}</div>
-        <div> % (1h): {{eth.data.1027.quotes.USD.percent_change_1h}}</div>
-        <div> % (24h): {{eth.data.1027.quotes.USD.percent_change_24h}}</div>
-    </div>
-    <div class="col draggable">
-        <h5>{{ada.data.2010.name}}</h5>
-        <div>{{ada.data.2010.symbol}}</div>
-        <div>Price: ${{ada.data.2010.quotes.USD.price}}</div>
-        <div> % (1h): {{ada.data.2010.quotes.USD.percent_change_1h}}</div>
-        <div> % (24h): {{ada.data.2010.quotes.USD.percent_change_24h}}</div>
-    </div>
-
-    <div class="col draggable">
-        <h5>{{btc.data.1.name}}</h5>
-        <div>{{btc.data.1.symbol}}</div>
-        <div>Price: ${{btc.data.1.quotes.USD.price}}</div>
-        <div> % (1h): {{btc.data.1.quotes.USD.percent_change_1h}}</div>
-        <div> % (24h): {{btc.data.1.quotes.USD.percent_change_24h}}</div>
-    </div>
-    <div class="col draggable">
-        <h5>{{eth.data.1027.name}}</h5>
-        <div>{{eth.data.1027.symbol}}</div>
-        <div>Price: ${{eth.data.1027.quotes.USD.price}}</div>
-        <div> % (1h): {{eth.data.1027.quotes.USD.percent_change_1h}}</div>
-        <div> % (24h): {{eth.data.1027.quotes.USD.percent_change_24h}}</div>
-    </div>
-    <div class="col draggable">
-        <h5>{{ada.data.2010.name}}</h5>
-        <div>{{ada.data.2010.symbol}}</div>
-        <div>Price: ${{ada.data.2010.quotes.USD.price}}</div>
-        <div> % (1h): {{ada.data.2010.quotes.USD.percent_change_1h}}</div>
-        <div> % (24h): {{ada.data.2010.quotes.USD.percent_change_24h}}</div>
+    <div class="col draggable" id="the_adder">
+        <div class="box">
+            <button id="add_view" class="btn btn-primary">Add View</button>
+            <select class="form-select" style="display:none;" id="user__choice" size="3" aria-label="size 3 select example">
+                {% for crypto in cryptocurrencies %}
+                    <option value="{{crypto.api_id}}" data-name="{{crypto.name}}">{{crypto.symbol}}</option>
+                {% endfor %}
+            </select>
+        </div>
     </div>
     
-</div>
 
-<div class="row">
-    <div class="col-3 m-2 p-0 draggable">
-        <img class="img-fluid" src="https://alternative.me/crypto/fear-and-greed-index.png" alt="Latest Crypto Fear & Greed Index"/>
+    <div class="col draggable">
+        <div class="box">
+            <img class="img-fluid" src="https://alternative.me/crypto/fear-and-greed-index.png" alt="Latest Crypto Fear & Greed Index"/>
+        </div>
     </div>
 
-    <div class="col-3 m-2 draggable" id="card1">
-        <button id="add_view" class="btn btn-primary">Add View</button>
-        
-        <select class="form-select" style="display:none;" id="user__choice" size="3" aria-label="size 3 select example">
-            <option selected>Open this select menu</option>
-            <option value="1" id="btc">BTC info</option>
-            <option value="2" id="eth">ETH info</option>
-            <option value="3" id="ada">ADA info</option>
-        </select>
+    <div class="col draggable">
+        <div class="box">
+            <h5>Cointelegraph</h5>
+            <script src="https://cointelegraph.com/news-widget" data-ct-widget-limit="30" data-ct-widget-theme="dark" data-ct-widget-language="en"></script>
+        </div>
     </div>
-
-    {% comment%}<div class="col m-2 draggable">
-        <h5>Cointelegraph</h5>
-        <script src="https://cointelegraph.com/news-widget" data-ct-widget-limit="30" data-ct-widget-theme="dark" data-ct-widget-language="en"></script>
-    </div>
-    {% endcomment %}
+    
 </div>
 
 {% endblock content %}
 
 {% block js %}
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 let addView = document.querySelector("#add_view")
 let card = document.querySelector("#card1")
 addView.addEventListener("click", function(e){
-    // console.log("clicked")
-    e.target.style.display = "none"
-    document.querySelector("#user__choice").style.display = "block"
-    // card.innerHTML = ""
-    // card.innerHTML = `
-    //     <select class="form-select" size="3" aria-label="size 3 select example">
-    //         <option selected>Open this select menu</option>
-    //         <option value="1" id="btc">BTC info</option>
-    //         <option value="2" id="eth">ETH info</option>
-    //         <option value="3" id="ada">ADA info</option>
-    //     </select>
-    // `
-
+    e.target.style.display = "none" //change the button to hide
+    document.querySelector("#user__choice").style.display = "block" //show the list
 })
 
 document.querySelector("#user__choice").addEventListener("change",function(e){
-    let element = e.target
     alert("ok")
-    console.log(e.target.id)
-    console.log(e.target.value)
-    if (e.target.value == 1){
     
-    let html = `
-    <div class="col-3 m-2 draggable">
-        <h5>{{btc.data.1.name}}</h5>
-        <div>{{btc.data.1.symbol}}</div>
-        <div>Price: ${{btc.data.1.quotes.USD.price}}</div>
-        <div> % (1h): {{btc.data.1.quotes.USD.percent_change_1h}}</div>
-        <div> % (24h): {{btc.data.1.quotes.USD.percent_change_24h}}</div>
-        </div>
-    `
+    let slug = e.target.options[e.target.selectedIndex].getAttribute("data-name")
+    let theId = parseInt(e.target.value)
+    getDataForBox(slug, theId)
 
-    let pos = document.querySelector("#card1")
-    pos.insertAdjacentHTML("beforebegin", html);
-    document.querySelector("#user__choice").style.display = "none"
-    document.querySelector("#add_view").style.display = "block"
+    async function getDataForBox(slug, theId){
+        let {data} =  await axios.get(`https://api.alternative.me/v2/ticker/${slug}/`)
+        console.log(typeof theId, theId)
+        //let name = data.data.theId.name
+        let name = data.data[theId].name
+        let symbol = data.data[theId].symbol
+        let price = data.data[theId].quotes.USD.price
+        let change1 = data.data[theId].quotes.USD.percent_change_1h
+        let change24 = data.data[theId].quotes.USD.percent_change_24h
+
+        let html = `
+        <div class="col draggable">
+            <div class="box">
+                <h5>${name}</h5>
+                <div>Symbol: ${symbol}</div>
+                <div>Price: $ ${price}</div>
+                <div> % (1h): ${change1}</div>
+                <div> % (24h): ${change24}</div>
+            </div>
+        </div>
+        `
+ 
+        let pos = document.querySelector("#the_adder")
+        pos.insertAdjacentHTML("beforebegin", html);
+        document.querySelector("#user__choice").style.display = "none"
+        document.querySelector("#add_view").style.display = "block"
     }
+
+    axios.post('',{name: slug})
 })
 
 </script>

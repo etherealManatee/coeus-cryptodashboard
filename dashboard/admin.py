@@ -1,8 +1,5 @@
 from django.contrib import admin
-from dashboard.models import Instruments
+from dashboard.models import *
 
 # Register your models here.
-class InstrumentsAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-admin.site.register(Instruments, InstrumentsAdmin)
+admin.site.register(Cryptocurrency)
