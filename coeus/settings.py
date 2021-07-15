@@ -81,16 +81,16 @@ WSGI_APPLICATION = 'coeus.wsgi.application'
 
 DATABASES = {
     'default': {
-        # # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'coeus_development',
-        # 'USER' : 'zhiyang',
-        # 'HOST' : 'localhost',
-        # 'PORT' : 5432
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'coeus_development',
+        'USER' : 'zhiyang',
+        'HOST' : 'localhost',
+        'PORT' : 5432
     }
 }
 
 #for deployment on heroku
-DATABASES['default'] = dj_database_url.config(default='postgres://mapgbxlmcbijww:4eb8709ddd45b67adab9ed2cbab44c4b3d511f201f901839cc0f93f3f8faaa9f@ec2-52-2-118-38.compute-1.amazonaws.com:5432/d63h231rh124vj')
+# DATABASES['default'] = dj_database_url.config(default='postgres://mapgbxlmcbijww:4eb8709ddd45b67adab9ed2cbab44c4b3d511f201f901839cc0f93f3f8faaa9f@ec2-52-2-118-38.compute-1.amazonaws.com:5432/d63h231rh124vj')
 
 
 #telling Django about the AbstractUser

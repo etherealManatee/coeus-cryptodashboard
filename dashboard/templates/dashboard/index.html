@@ -19,7 +19,7 @@
     {% endfor %}
 
     <div class="col draggable" id="the_adder">
-        <div class="box">
+        <div class="box the_adder_box">
             <button id="add_view" class="btn btn-primary">Add View</button>
             <select class="form-select" style="display:none;" id="user__choice" size="3" aria-label="size 3 select example">
                 {% for crypto in cryptocurrencies %}
@@ -37,9 +37,11 @@
     </div>
 
     <div class="col draggable">
-        <div class="box">
+        <div class="box" id="news">
             <h5>Cointelegraph</h5>
-            <script src="https://cointelegraph.com/news-widget" data-ct-widget-limit="30" data-ct-widget-theme="dark" data-ct-widget-language="en"></script>
+            <div>
+                <script src="https://cointelegraph.com/news-widget" data-ct-widget-limit="30" data-ct-widget-theme="dark" data-ct-widget-language="en"></script>
+            </div>
         </div>
     </div>
     
@@ -58,7 +60,7 @@ addView.addEventListener("click", function(e){
 })
 
 document.querySelector("#user__choice").addEventListener("change",function(e){
-    alert("ok")
+    alert(`${e.target.options[e.target.selectedIndex].getAttribute("data-name")} added`)
     
     let slug = e.target.options[e.target.selectedIndex].getAttribute("data-name")
     let theId = parseInt(e.target.value)

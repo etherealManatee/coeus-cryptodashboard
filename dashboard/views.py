@@ -78,10 +78,15 @@ def add_crypto(request, crypto_name):
             symbol=symbol_of_crypto_from_api
         )
 
-        return render(request, "dashboard/base.html")
+        return render(request, "dashboard/index.html")
     
     # cryptocurrencies = Cryptocurrency.objects.get(user_id=request.user.id)
     # print(cryptocurrencies)
     
-    return render(request, "dashboard/base.html")
+    return render(request, "dashboard/index.html")
     
+@csrf_exempt
+@login_required
+def refresh_sidebar(request):
+    print('refresh')
+    return render(request, "dashboard/base.html")
